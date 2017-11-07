@@ -3,7 +3,7 @@ import time
 from slackclient import SlackClient
 from dotenv import load_dotenv
 
-load_dotenv('.env')
+load_dotenv('python.env')
 
 slack_token = os.environ["SLACK_API_TOKEN"]
 sc = SlackClient(slack_token)
@@ -34,18 +34,13 @@ if sc.rtm_connect():
     while True:
         events = sc.rtm_read()
         users = sc.api_call("users.list")
-        members = users["member"]
+        members = users['members']
         for event in events:
             if event["type"] == "message":
                 if event["text"] == "waddayaat":
                     sc.api_call(
                         "chat.postMessage",
                         channel = event["channel"], 
-                        text = member["name"]
-            elif event ["type"] == "presence_change":
-                handle_channel_join(event)        
-        for member in users:
-            print(["name"])
-            "chat.postMessage",
-            channel = users["channel"]
-            
+                        text = members[2])
+            elif event["type"] == "presence_change":
+                handle_channel_join(event)
